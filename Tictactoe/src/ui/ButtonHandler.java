@@ -2,13 +2,13 @@ package ui;
 
 import animation.AnimationHandler;
 import game.Board;
-import game.Player;
 import game.Game;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class ButtonHandler implements EventHandler<ActionEvent> {
+	
     private Game game;                 // Referencia al juego
     private Board board;               // Referencia al tablero
     private AnimationHandler animation; // Controlador de animaciones

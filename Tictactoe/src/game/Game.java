@@ -1,61 +1,53 @@
 package game;
 
-import java.util.Scanner;
-
 public class Game {
+	
     private Board board;          // Instancia del tablero
     private Player playerX;       // Jugador X
     private Player playerO;       // Jugador O
-    private Player currentPlayer;  // Jugador actual
+    private Player currentPlayer; // Jugador actual
     private int moveCount;        // Contador de movimientos
 
     // Constructor
     public Game() {
-        board = new Board();              // Crea un nuevo tablero
+        board = new Board();                // Crea un nuevo tablero
         playerX = new Player("X", "Jugador 1"); // Crea el jugador X
         playerO = new Player("O", "Jugador 2"); // Crea el jugador O
-        currentPlayer = playerX;          // Establece el jugador actual como X
-        moveCount = 0;                    // Inicializa el contador de movimientos
+        currentPlayer = playerX;            // Establece el jugador actual como X
+        moveCount = 0;                      // Inicializa el contador de movimientos
     }
 
-    // Método para iniciar el juego
-    public void start() {
-        Scanner scanner = new Scanner(System.in);
+    // Método para obtener el tablero del juego
+    public Board getBoard() {
+        return board;
+    }
 
-        while (true) {
-            System.out.println("Turno de: " + currentPlayer.getName() + " (" + currentPlayer.getSymbol() + ")");
-            board.display();
+    // Método para obtener el jugador actual
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 
-            // Solicita al jugador que ingrese la posición
-            System.out.print("Ingrese fila (0-2) y columna (0-2) separados por un espacio: ");
-            int row = scanner.nextInt();
-            int col = scanner.nextInt();
-
-            // Realiza el movimiento
-            if (board.makeMove(row, col, currentPlayer.getSymbol())) {
-                moveCount++;
-
-                // Verifica si hay un ganador
-                String winner = board.checkWinner();
-                if (!winner.isEmpty()) {
-                    board.display();
-                    System.out.println("¡El ganador es: " + winner + "!");
-                    break;
-                }
-
-                // Verifica si el tablero está lleno
-                if (board.isFull()) {
-                    board.display();
-                    System.out.println("¡Es un empate!");
-                    break;
-                }
-
-                // Cambia al siguiente jugador
-                currentPlayer = (currentPlayer == playerX) ? playerO : playerX;
-            } else {
-                System.out.println("Movimiento inválido. Intente de nuevo.");
-            }
+    // Método para realizar un movimiento
+    public boolean makeMove(int row, int col) {
+        if (board.makeMove(row, col, currentPlayer.getSymbol())) {
+            moveCount++; // Incrementa el contador de movimientos
+            return true; // Movimiento válido
         }
-        scanner.close();
+        return false; // Movimiento inválido
+    }
+
+    // Método para cambiar al siguiente jugador
+    public void switchPlayer() {
+        currentPlayer = (currentPlayer == playerX) ? playerO : playerX;
+    }
+
+    // Método para obtener la cantidad de movimientos realizados
+    public int getMoveCount() {
+        return moveCount;
+    }
+
+    // Método para reiniciar el contador de movimientos (opcional, si decides usarlo)
+    public void resetMoveCount() {
+        moveCount = 0;
     }
 }
