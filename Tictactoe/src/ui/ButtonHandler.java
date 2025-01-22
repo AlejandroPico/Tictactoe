@@ -5,6 +5,7 @@ import game.Board;
 import game.Game;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 public class ButtonHandler implements EventHandler<ActionEvent> {
@@ -36,6 +37,42 @@ public class ButtonHandler implements EventHandler<ActionEvent> {
                 }
             }
         }
+        
+     // Busca la posición del botón
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[i].length; j++) {
+                if (buttons[i][j] == clickedButton) {
+                    row = i;
+                    col = j;
+                    break;
+                }
+            }
+        }
+
+        if (row == -1 || col == -1) return;
+
+        if (game.makeMove(row, col)) {
+            clickedButton.setText(game.getCurrentPlayer().getSymbol());
+            clickedButton.setDisable(true);
+
+            String winner = game.getBoard().checkWinner();
+            if (!winner.isEmpty()) {
+                showWinner(winner);
+                disableAllButtons();
+                animation.stopBlinking();
+            } else if (game.getBoard().isFull()) {
+                showTie();
+                disableAllButtons();
+                animation.stopBlinking();
+            } else {
+                if (game.getMoveCount() > 3) {
+                    animation.blink(buttons[row][col]);
+                }
+                game.switchPlayer();
+            }
+        } else {
+            System.out.println("Movimiento inválido");
+        }
 
         // Verifica si el movimiento es válido
         if (game.makeMove(row, col)) {
@@ -63,6 +100,30 @@ public class ButtonHandler implements EventHandler<ActionEvent> {
             game.switchPlayer();
         } else {
             System.out.println("Movimiento inválido. Intente de nuevo.");
+        }
+    }
+
+    private void showWinner(String winner) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("¡Fin del juego!");
+        alert.setHeaderText("¡Tenemos un ganador!");
+        alert.setContentText("El jugador " + winner + " ha ganado.");
+        alert.showAndWait();
+    }
+
+    private void showTie() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("¡Fin del juego!");
+        alert.setHeaderText("¡Empate!");
+        alert.setContentText("El tablero está lleno.");
+        alert.showAndWait();
+    }
+
+    private void disableAllButtons() {
+        for (Button[] row : buttons) {
+            for (Button btn : row) {
+                btn.setDisable(true);
+            }
         }
     }
 }

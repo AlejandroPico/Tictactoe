@@ -5,7 +5,9 @@ import animation.AnimationHandler;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -17,17 +19,34 @@ public class GameUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        game = new Game();                  // Crea una nueva instancia del juego
-        buttons = new Button[3][3];        // Inicializa la matriz de botones
-        animationHandler = new AnimationHandler(); // Crea el controlador de animaciones
+    	game = new Game();
+        buttons = new Button[3][3];
+        animationHandler = new AnimationHandler();
 
-        GridPane grid = new GridPane();    // Crea un GridPane para organizar los botones
-        initializeButtons(grid);            // Inicializa los botones en el GridPane
+        GridPane grid = new GridPane();
+        initializeButtons(grid);
 
-        Scene scene = new Scene(grid, 300, 300); // Crea una nueva escena
-        primaryStage.setTitle("Juego del Tres en Raya");
+        Button restartBtn = new Button("Reiniciar");
+        restartBtn.setOnAction(e -> restartGame());
+
+        VBox root = new VBox(10, new Label("Tres en Raya"), grid, restartBtn);
+        Scene scene = new Scene(root, 300, 350);
+
         primaryStage.setScene(scene);
-        primaryStage.show();                // Muestra la ventana
+        primaryStage.show();
+        
+    }
+    
+    private void restartGame() {
+        game = new Game();
+        animationHandler.stopBlinking();
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[i].length; j++) {
+                buttons[i][j].setText("");
+                buttons[i][j].setDisable(false);
+                buttons[i][j].setVisible(true);
+            }
+        }
     }
 
     // Método para inicializar los botones y agregarlos al GridPane

@@ -6,13 +6,13 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="librerias/javafx.base.jar"/>
-	<classpathentry kind="lib" path="librerias/javafx.controls.jar"/>
-	<classpathentry kind="lib" path="librerias/javafx.fxml.jar"/>
-	<classpathentry kind="lib" path="librerias/javafx.graphics.jar"/>
-	<classpathentry kind="lib" path="librerias/javafx.media.jar"/>
-	<classpathentry kind="lib" path="librerias/javafx.swing.jar"/>
-	<classpathentry kind="lib" path="librerias/javafx.web.jar"/>
-	<classpathentry kind="lib" path="librerias/javafx-swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="librerias/javafx.base.jar"/>
+	<classpathentry exported="true" kind="lib" path="librerias/javafx.controls.jar"/>
+	<classpathentry exported="true" kind="lib" path="librerias/javafx.fxml.jar"/>
+	<classpathentry exported="true" kind="lib" path="librerias/javafx.graphics.jar"/>
+	<classpathentry exported="true" kind="lib" path="librerias/javafx.media.jar"/>
+	<classpathentry exported="true" kind="lib" path="librerias/javafx.swing.jar"/>
+	<classpathentry exported="true" kind="lib" path="librerias/javafx.web.jar"/>
+	<classpathentry exported="true" kind="lib" path="librerias/javafx-swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
