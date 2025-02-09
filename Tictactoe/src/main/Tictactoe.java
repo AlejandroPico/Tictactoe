@@ -33,6 +33,9 @@ public class Tictactoe extends JFrame {
     private Color colorX = Color.RED;
     private Color colorO = Color.BLUE;
     private Color highlightColor = Color.YELLOW; // Color de resaltado para la combinación ganadora
+    
+    // Cantidad máxima de X o O admitidas por jugador
+    private Integer maxSymbols = 3;
 
     public Tictactoe() {
         setTitle("Tres en Raya");
@@ -147,20 +150,20 @@ public class Tictactoe extends JFrame {
         // Si el jugador ya tiene 3 fichas en el tablero, se elimina la más antigua.
         if (currentPlayer == 'X') {
             movesX.add(new Point(row, col));
-            if(movesX.size() > 4){
+            if(movesX.size() > maxSymbols){
                 Point oldest = movesX.removeFirst();
                 buttons[oldest.x][oldest.y].setText("");
             }
         } else {
             movesO.add(new Point(row, col));
-            if(movesO.size() > 4){
+            if(movesO.size() > maxSymbols){
                 Point oldest = movesO.removeFirst();
                 buttons[oldest.x][oldest.y].setText("");
             }
         }
         
         // Se verifica si el jugador actual, al tener 3 fichas, consigue una línea ganadora.
-        if ((currentPlayer == 'X' && movesX.size() == 4) || (currentPlayer == 'O' && movesO.size() == 4)) {
+        if ((currentPlayer == 'X' && movesX.size() == maxSymbols) || (currentPlayer == 'O' && movesO.size() == maxSymbols)) {
             List<Point> winningCombo = checkWinner(currentPlayer);
             if(winningCombo != null){
                 gameEnded = true;
